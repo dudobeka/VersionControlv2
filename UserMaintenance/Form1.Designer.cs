@@ -44,6 +44,7 @@ namespace UserMaintenance
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(305, 433);
             this.listBox1.TabIndex = 0;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // textBox1
             // 
@@ -68,6 +69,7 @@ namespace UserMaintenance
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 3;
             this.label1.Text = "label1";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
