@@ -11,9 +11,6 @@ namespace LINQ
         public int ID { get; set; }
         public string Name { get; set; }
 
-        public static implicit operator Brand(string v)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
