@@ -21,6 +21,7 @@ namespace LINQ
         {
             InitializeComponent();
             LoadData("ramen.csv");
+            GetCountries();
         }
 
         void LoadData(string fileName)
@@ -48,7 +49,24 @@ namespace LINQ
             }
             sr.Close();
 
-            Country AddCountry(string orszag)
+        
+
+        Brand AddBrand(string marka)
+        {
+            var ered = (from c in brands where c.Name.Equals(marka) select c).FirstOrDefault();
+            if (ered == null) //nincs ilyen márka a listában
+            {
+                ered = new Brand
+                {
+                    ID = brands.Count,
+                    Name = marka
+                };
+                brands.Add(ered);
+            }
+            return ered;
+        }
+
+        Country AddCountry(string orszag)
             {
                 var ered = (from c in countries where c.Name.Equals(orszag) select c).FirstOrDefault();
                 if (ered == null) //nincs ilyen oszág a listában
@@ -64,19 +82,24 @@ namespace LINQ
             }
         }
 
-        Brand AddBrand(string marka)
+        private void GetCountries()
         {
-            var ered = (from c in brands where c.Name.Equals(marka) select c).FirstOrDefault();
-            if (ered == null) //nincs ilyen márka a listában
-            {
-                ered = new Brand
-                {
-                    ID = brands.Count,
-                    Name = marka
-                };
-                brands.Add(ered);
-            }
-            return ered;
+            var ered = from c in countries
+                       where c.Name.Contains(textBox1.Text)
+                       orderby c.Name
+                       select c;
+            listBox1.DataSource = ered.ToList();
+            listBox1.DisplayMember = "Name";
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            GetCountries();
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
