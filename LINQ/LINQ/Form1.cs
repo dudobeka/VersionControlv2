@@ -14,6 +14,7 @@ namespace LINQ
     public partial class Form1 : Form
     {
         List<Country> countries = new List<Country>();
+        List<Ramen> ramnes = new List<Ramen>();
     
         public Form1()
         {
@@ -30,6 +31,12 @@ namespace LINQ
                 string[] sor = sr.ReadLine().Split(';');
                 string orszag = sor[2];
                 // var ered = countries.Where(i => i.Name.Equals(orszag)).FirstOrDefault(); //LINQ
+                AddCountry(orszag);
+            }
+            sr.Close();
+
+            void AddCountry(string orszag)
+            {
                 var ered = (from c in countries where c.Name.Equals(orszag) select c).FirstOrDefault();
                 if (ered == null) //nincs ilyen oszág a listában
                 {
@@ -41,7 +48,6 @@ namespace LINQ
                     countries.Add(ered);
                 }
             }
-            sr.Close();
         }
     }
 }
