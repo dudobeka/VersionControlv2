@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace LINQ
 {
-    class Ramen
+    class Brand
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public Brand Brand { get; set; }
-        public int CountryFK { get; set; }
-        public Country Country { get; set; }
-        public double Rating { get; set; }
 
-
-
+        public static implicit operator Brand(string v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
