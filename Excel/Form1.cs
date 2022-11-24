@@ -12,22 +12,21 @@ using System.Reflection;
 
 namespace Excel
 {
-    public partial class Form1 : Form
+    public partial class Form : System.Windows.Forms.Form
     {
         List<Flat> flats;
         RealEstateEntities re = new RealEstateEntities();
 
-        Excel1.Application xlApp; // A Microsoft Excel alkalmazás
-        Excel1.Workbook xlWB; // A létrehozott munkafüzet
-        Excel1.Worksheet xlSheet; // Munkalap a munkafüzeten belül
+        Excel1.Application xlApp;
+        Excel1.Workbook xlWB;
+        Excel1.Worksheet xlSheet;
 
-
-        void LoadData()
+        public void LoadData()
         {
             flats = re.Flats.ToList();
         }
 
-        void CreateExcel()
+        public void CreateExcel()
         {
             try
             {
@@ -51,7 +50,7 @@ namespace Excel
 
         }
 
-        private void CreateTable()
+        public void CreateTable()
         {
 
             string[] headers = new string[] {
@@ -75,16 +74,71 @@ namespace Excel
             }
 
 
+            foreach (var f in flats)
+            {
+                values[counter, 0] = f.Code;
+                values[counter, 1] = f.Vendor;
+                values[counter, 2] = f.Side;
+                values[counter, 3] = f.District;
+                values[counter, 4] = f.Elevator;
+                values[counter, 5] = f.NumberOfRooms;
+                values[counter, 6] = f.FloorArea;
+                values[counter, 7] = f.Price;
+                values[counter, 8] = "";
+                counter++;
 
+            }
 
+            r = xlSheet.get_Range(GetCell(2, 1),
+                       GetCell(flats.Count + 1, headers.Length));
+            r.Value = values;
+            r = xlSheet.get_Range(GetCell(2, 9),
+                        GetCell(flats.Count + 1, 9));
+            r.Value = "=1000000*" + GetCell(2, 8) + "/" + GetCell(2, 7);
+
+            Excel1.Range headerRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1, headers.Length));
+            headerRange.Font.Bold = true;
+            headerRange.VerticalAlignment = Excel1.XlVAlign.xlVAlignCenter;
+            headerRange.HorizontalAlignment = Excel1.XlHAlign.xlHAlignCenter;
+            headerRange.EntireColumn.AutoFit();
+            headerRange.RowHeight = 40;
+            headerRange.Interior.Color = Color.LightBlue;
+            headerRange.BorderAround2(Excel1.XlLineStyle.xlContinuous, Excel1.XlBorderWeight.xlThick);
+
+            r = xlSheet.UsedRange;
+            r.BorderAround2(Excel1.XlLineStyle.xlContinuous, Excel1.XlBorderWeight.xlThick);
+            r = xlSheet.get_Range(GetCell(2, 1),
+                        GetCell(flats.Count + 1, 1));
+            r.Font.Bold = true;
+            r.Interior.Color = Color.LightYellow;
+            //utolsó oszlop halványzöld háttér
+            r = xlSheet.get_Range(GetCell(2, 9),
+                        GetCell(flats.Count + 1, 9));
+            r.Interior.Color = Color.LightGreen;
+            r.NumberFormat = "0.00";
         }
 
+        private string GetCell(int x, int y)
+        {
+            string ExcelCoordinate = "";
+            int dividend = y;
+            int modulo;
 
-        public Form1()
+            while (dividend > 0)
+            {
+                modulo = (dividend - 1) % 26;
+                ExcelCoordinate = Convert.ToChar(65 + modulo).ToString() + ExcelCoordinate;
+                dividend = (int)((dividend - modulo) / 26);
+            }
+            ExcelCoordinate += x.ToString();
+
+            return ExcelCoordinate;
+        }
+        public Form()
         {
             InitializeComponent();
             LoadData();
             CreateExcel();
         }
     }
-}
+ }

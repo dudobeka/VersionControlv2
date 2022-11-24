@@ -1,12 +1,16 @@
 ﻿
+using System;
+
 namespace Excel
 {
-    partial class Form1
+    partial class Form
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+
+        public EventHandler Form1_Load { get; private set; }
 
         /// <summary>
         /// Clean up any resources being used.
@@ -37,8 +41,9 @@ namespace Excel
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultBounds;
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.ResumeLayout(false);
 
         }
