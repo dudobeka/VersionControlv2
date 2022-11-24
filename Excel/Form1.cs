@@ -54,6 +54,29 @@ namespace Excel
         private void CreateTable()
         {
 
+            string[] headers = new string[] {
+             "Kód",
+             "Eladó",
+             "Oldal",
+             "Kerület",
+             "Lift",
+             "Szobák száma",
+             "Alapterület (m2)",
+             "Ár (mFt)",
+             "Négyzetméter ár (Ft/m2)"};
+
+            object[,] values = new object[flats.Count, headers.Length];
+            int counter = 0;
+            Excel1.Range r;
+
+            for (int i = 0; i < headers.Length; i++)
+            {
+                xlSheet.Cells[1, i + 1] = headers[i];
+            }
+
+
+
+
         }
 
 
@@ -61,6 +84,7 @@ namespace Excel
         {
             InitializeComponent();
             LoadData();
+            CreateExcel();
         }
     }
 }
