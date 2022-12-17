@@ -41,7 +41,7 @@ namespace Value_at_Risk
                                       orderby x
                                       select x)
                                         .ToList();
-            MessageBox.Show(nyereségekRendezve[nyereségekRendezve.Count() / 5].ToString());
+ //           MessageBox.Show(nyereségekRendezve[nyereségekRendezve.Count() / 5].ToString());
 
         }
 
