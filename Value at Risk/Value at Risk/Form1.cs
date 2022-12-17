@@ -14,9 +14,12 @@ namespace Value_at_Risk
     {
         List<Tick> ticks;
         PortfolioEntities context = new PortfolioEntities();
+
         public Form1()
         {
             InitializeComponent();
+            ticks = context.Tick.ToList();
+            dataGridView1.DataSource = ticks;
         }
 
         private void Form1_Load(object sender, EventArgs e)
